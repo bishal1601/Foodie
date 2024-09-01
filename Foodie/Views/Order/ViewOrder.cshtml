@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Foodie.Models.Order>
+
+@{
+    ViewData["Title"] = "View Order";
+    Layout = "~/Views/Shared/_adminlayout.cshtml";
+}
+<br />
+<h1>View Order</h1>
+
+
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Order No.</th>
+                <th>Customer Name</th>
+               
+                <th>@Html.DisplayNameFor(model => model.Address)</th>
+                <th>@Html.DisplayNameFor(model => model.Contact)</th>
+                <th>Product Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Order Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                var statusClass = item.OrderStatus == 1 ? "text-success" : "text-warning";
+                var statusText = item.OrderStatus == 1 ? "Delivered" : "Pending";
+                    <tr>
+                                                    <td>@Html.DisplayFor(modelItem => item.Id)
+
+                        <td>@Html.DisplayFor(modelItem => item.CFName)
+                        @Html.DisplayFor(modelItem => item.CLname)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Address)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Contact)</td>
+                        <td>@Html.DisplayFor(modelItem => item.ProductName)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Qty)</td>
+                        <td>@Html.DisplayFor(modelItem => item.price)</td>
+                        <td><span class="@statusClass">@statusText</span></td>
+                        <td>
+                        @if (item.OrderStatus == 0)
+                        {
+                                              <form asp-action="Completed" method="post" class="d-inline">
+                                                <input type="hidden" name="id" value="@item.Id" />
+                                                <button type="submit" class="btn btn-warning btn-sm">Pending</button>
+                                            </form>     
+                        }
+                        else
+                        {
+                                             <form asp-action="Pending" method="post" class="d-inline">
+                                                <input type="hidden" name="id" value="@item.Id" />
+                                                <button type="submit" class="btn btn-success btn-sm">Completed</button>
+                                            </form>
+
+
+                                    
+                        }
+                        </td>
+                    </tr>
+            }
+        </tbody>
+    </table>
+</div>

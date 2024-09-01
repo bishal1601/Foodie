@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Foodie</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Foodie.styles.css" asp-append-version="true" />
+    <style>
+        body, .navbar, .offcanvas, .dropdown-menu {
+            color: black !important;
+        }
+        .dropdown-menu a {
+            color: black !important;
+        }
+        .dropdown-item {
+            transition: color 0.3s, background-color 0.3s;
+        }
+        .dropdown-item:hover {
+            color: white !important;
+            background-color: #808B96 !important;
+        }
+        .navbar {
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body style="background-color: #EBFFFC;">
+
+    <nav class="navbar navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+
+            <a class="navbar-brand text-white" href="/Dashboard/Index">Foodie</a>
+            <a class="navbar-brand text-white" href="/Dashboard/Index">Dashboard</a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title text-black" id="offcanvasNavbarLabel">Dashboard</h5>
+                    <button type="button" class="btn-close btn-close-black" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                        <li class="nav-item">
+                            <a class="nav-link text-black" href="~/Customer/ViewCustomer">Customer</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-black" href="~/Order/ViewOrder">Order</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-black" href="~/Admin/ViewMenu">Menu</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-black" href="~/Admin/ViewUser">User</a>
+                        </li>
+                            
+                            
+                        
+                        <li class="nav-item">
+                            <a class="nav-link text-black" asp-area="" asp-controller="Auth" asp-action="Logout">Logout</a>
+                             
+                                                
+                                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid mt-5">
+        @RenderBody()
+    </div>
+
+    @RenderSection("Scripts", required: false)
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRi5hcOD8Fb5MRu2dQ16SHtw09JflDea6BZL6Yg9i" crossorigin="anonymous"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

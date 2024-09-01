@@ -1,0 +1,114 @@
+﻿@model Foodie.Models.ProductViewModel
+
+@{
+    ViewData["Title"] = "Update Product";
+    Layout = "~/Views/Shared/_adminlayout.cshtml";
+}
+<style>
+    body {
+        overflow: hidden;
+    }
+
+    .container {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .card {
+        width: 100%;
+        max-width: 500px;
+        border-radius: 10px;
+    }
+
+    .form-group label {
+        font-weight: bold;
+    }
+
+    #imagePreviewContainer {
+        position: absolute;
+        top: 50%;
+        left: 20px;
+        transform: translateY(-50%);
+        max-width: 200px;
+        max-height: 200px;
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+        padding: 5px;
+        z-index: 9999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #imagePreviewContainer img {
+        max-width: 100%;
+        max-height: 100%;
+        border-radius: 5px;
+    }
+</style>
+
+<div class="container">
+    <div id="imagePreviewContainer" style="display: none;">
+        <img id="imagePreview" src="" alt="Image Preview" />
+    </div>
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h3 class="card-title text-center mb-4">Update Product</h3>
+            <form id="updateProductForm" asp-action="UpdateMenu" method="post" enctype="multipart/form-data">
+                <div class="form-group row mb-3">
+                    <label for="ProductName" class="col-sm-4 col-form-label">Product Name</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="ProductName" name="ProductName" value="@Model.ProductName" required>
+                    </div>
+                </div>
+                <div class="form-group row mb-3">
+                    <label for="Price" class="col-sm-4 col-form-label">Price</label>
+                    <div class="col-sm-8">
+                        <input type="number" class="form-control" id="Price" name="Price" value="@Model.Price" required>
+                    </div>
+                </div>
+                <div class="form-group row mb-3">
+                    <label for="Image" class="col-sm-4 col-form-label">Image</label>
+                    <div class="col-sm-8">
+                        <input type="file" class="form-control" id="Image" name="Image"  accept="image/*" onchange="previewImage(event)">
+                    </div>
+                </div>
+                <div class="form-group row mb-3">
+                    <label for="PreparationTime" class="col-sm-4 col-form-label">Preparation Time</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="PreparationTime" name="PreparationTime" value="@Model.PreparationTime" required>
+                    </div>
+                </div>
+                <!-- Other form fields -->
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary mr-2">Update</button>
+                    <button type="reset" class="btn btn-secondary" onclick="resetPreview()">Reset</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function previewImage(event) {
+        var reader = new FileReader();
+        reader.onload = function() {
+            var previewContainer = document.getElementById('imagePreviewContainer');
+            var preview = document.getElementById('imagePreview');
+            preview.src = reader.result;
+            previewContainer.style.display = 'flex';
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+
+    function resetPreview() {
+        var previewContainer = document.getElementById('imagePreviewContainer');
+        var preview = document.getElementById('imagePreview');
+        preview.src = '';
+        previewContainer.style.display = 'none';
+    }
+</script>

@@ -1,0 +1,127 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_adminlayout.cshtml";
+}
+<br />
+
+<div class="main-content">
+    @{
+        var loggedInUserName = HttpContextAccessor.HttpContext.Session.GetString("Username");
+    }
+    <h1 class="mb-5 text-center">Welcome @loggedInUserName to Dashboard</h1>
+    
+                            
+    <div class="row">
+        <!-- Products Card -->
+        <div class="col-md-6 col-lg-3 mb-4">
+            <div class="card text-white bg-primary h-100">
+                <div class="card-body text-center">
+                    <i class="fa fa-box fa-3x mb-3"></i>
+                    <h5 class="card-title">Products</h5>
+                    <p class="card-text">Manage your product listings here.</p>
+                    <a href="/Admin/Viewmenu" class="btn btn-light">Go to Products</a>
+                </div>
+            </div>
+        </div>
+        <!-- Users Card -->
+        <div class="col-md-6 col-lg-3 mb-4">
+            <div class="card text-white bg-success h-100">
+                <div class="card-body text-center">
+                    <i class="fa fa-users fa-3x mb-3"></i>
+                    <h5 class="card-title">Users</h5>
+                    <p class="card-text">Manage user accounts and permissions.</p>
+                    <a href="/Admin/Viewuser" class="btn btn-light">Go to Users</a>
+                </div>
+            </div>
+        </div>
+        <!-- Customer Card -->
+        <div class="col-md-6 col-lg-3 mb-4">
+            <div class="card text-white bg-info h-100">
+                <div class="card-body text-center">
+                    <i class="fa fa-user fa-3x mb-3"></i>
+                    <h5 class="card-title">Customer</h5>
+                    <p class="card-text">Manage your customers.</p>
+                    <a href="/Customer/ViewCustomer" class="btn btn-light">Go to Customer</a>
+                </div>
+            </div>
+        </div>
+        <!-- Order Card -->
+        <div class="col-md-6 col-lg-3 mb-4">
+            <div class="card text-white bg-warning h-100">
+                <div class="card-body text-center">
+                    <i class="fa fa-receipt fa-3x mb-3"></i>
+                    <h5 class="card-title">Order Received</h5>
+                    <p class="card-text">Manage your orders.</p>
+                    <a href="/Order/ViewOrder" class="btn btn-light">Go to Order</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Include Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnH1zXyCrOnZ7iSg6Em7heP1vKv4OOIBt71OXVy+4rt50EmBl0gwhj+Zgx3v7gJIdZyj2LkUQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<style>
+    .main-content {
+        padding: 20px;
+        background-color: #f8f9fa;
+        min-height: 100vh;
+    }
+
+    h1 {
+        font-weight: bold;
+        color: #343a40;
+    }
+
+    .card {
+        border-radius: 12px;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .card-title {
+        font-size: 1.2rem;
+    }
+
+    .card-text {
+        font-size: 0.95rem;
+    }
+
+    .btn-light {
+        border-radius: 20px;
+        padding: 8px 16px;
+        font-size: 0.95rem;
+        color: #343a40;
+        background-color: #ffffff;
+    }
+
+    .btn-light:hover {
+        background-color: #e2e6ea;
+        color: #343a40;
+    }
+
+    .fa {
+        margin-bottom: 10px;
+    }
+
+    .bg-primary {
+        background-color: #007bff !important;
+    }
+
+    .bg-success {
+        background-color: #28a745 !important;
+    }
+
+    .bg-info {
+        background-color: #17a2b8 !important;
+    }
+
+    .bg-warning {
+        background-color: #ffc107 !important;
+    }
+</style>

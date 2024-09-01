@@ -1,0 +1,106 @@
+﻿@model Foodie.Models.Customer
+
+@{
+    ViewData["Title"] = "Register Customer";
+}
+
+<div class="container mt-0">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg border-0 rounded-lg">
+                <div class="card-header bg-info text-white text-center">
+                    <h2>Register Customer</h2>
+                </div>
+                <div class="card-body p-4">
+                    <form asp-action="CustomerRegister" method="post">
+                        <div class="form-floating mb-1">
+                            <input asp-for="FName" class="form-control" placeholder="First Name" />
+                            <label asp-for="FName">First Name</label>
+                            <span asp-validation-for="FName" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating mb-1">
+                            <input asp-for="LName" class="form-control" placeholder="Last Name" />
+                            <label asp-for="LName">Last Name</label>
+                            <span asp-validation-for="LName" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating mb-1">
+                            <input asp-for="UserName" class="form-control" placeholder="Username" />
+                            <label asp-for="UserName">Username</label>
+                            <span asp-validation-for="UserName" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating mb-1">
+                            <input asp-for="Password" type="password" class="form-control" placeholder="Password" />
+                            <label asp-for="Password">Password</label>
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating mb-1">
+                            <input asp-for="Email" class="form-control" placeholder="Email" />
+                            <label asp-for="Email">Email</label>
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating mb-1">
+                            <input asp-for="Address" class="form-control" placeholder="Address" />
+                            <label asp-for="Address">Address</label>
+                            <span asp-validation-for="Address" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating mb-1">
+                            <input asp-for="Contact" class="form-control" placeholder="Contact"  maxlength="10" minlength="10"/>
+                            <label asp-for="Contact">Contact</label>
+                            <span asp-validation-for="Contact" class="text-danger"></span>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-info btn-lg">Register</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+<style>
+    .container {
+        margin-top: 10px;
+    }
+
+    .card {
+        border-radius: 2px;
+    }
+
+    .card-header {
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+    }
+
+    .form-floating {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-floating input {
+        height: calc(3rem + 2px);
+        padding: 1rem 1rem;
+    }
+
+    .form-floating label {
+        padding: 1rem 1rem;
+    }
+
+    .btn-lg {
+        padding: 12px;
+        font-size: 1.2rem;
+    }
+    body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #f6d365 0%, #fda085 50%, #fbc7d4 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+</style>

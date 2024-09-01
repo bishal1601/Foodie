@@ -1,0 +1,100 @@
+﻿@model Foodie.Models.ProductViewModel
+
+@{
+    ViewData["Title"] = "Add Product";
+    Layout = "~/Views/Shared/_adminlayout.cshtml";
+}
+
+<style>
+    body {
+        overflow: hidden;
+    }
+
+    #imagePreview {
+        position: fixed;
+        top: 50%;
+        left: 20px;
+        transform: translateY(-50%);
+        display: none;
+        max-width: 200px;
+        max-height: 200px;
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+        padding: 5px;
+        z-index: 9999;
+    }
+</style>
+
+<div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <div class="card shadow-sm" style="width: 100%; max-width: 450px; border-radius: 10px;">
+        <div class="card-body">
+            <h3 class="card-title text-center mb-4">Add Product</h3>
+            <form asp-action="AddProduct" method="post" enctype="multipart/form-data">
+                <div class="form-group row mb-3">
+                    <label for="ProductName" class="col-sm-3 col-form-label">Name</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="ProductName" name="ProductName" placeholder="Product Name" required>
+                    </div>
+                </div>
+                <div class="form-group row mb-3">
+                    <label for="Price" class="col-sm-3 col-form-label">Price</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="Price" name="Price" placeholder="Price" required>
+                    </div>
+                </div>
+                <div class="form-group row mb-4">
+                    <label for="Image" class="col-sm-3 col-form-label" required>Image</label>
+                    <div class="col-sm-9 position-relative">
+                        <input type="file" class="form-control" id="Image" name="Image" accept="image/*" onchange="previewImage(event)">
+                        <div id="imagePreview"></div>
+                    </div>
+                </div>
+                <div class="form-group row mb-3">
+                    <label for="PreparationTime" class="col-sm-6 col-form-label">Preparation Time (mins)</label>
+                    <div class="col-sm-6">
+                        <select class="form-control" id="PreparationTime" name="PreparationTime" required>
+                            <option value="No Need">Ready</option>
+                            @for (int i = 5; i <= 60; i += 5)
+                            {
+                                    <option value="@i">@i min</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary mr-2">Save</button>
+                    <button type="reset" class="btn btn-secondary" onclick="resetForm()">Reset</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Function to handle image selection and preview
+    function previewImage(event) {
+        var input = event.target;
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function() {
+                var img = document.createElement("img");
+                img.src = reader.result;
+                img.classList.add("img-fluid");
+                img.classList.add("rounded");
+                document.getElementById("imagePreview").innerHTML = "";
+                document.getElementById("imagePreview").appendChild(img);
+                document.getElementById("imagePreview").style.display = "block";
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    // Function to reset the form and image preview
+    function resetForm() {
+        document.getElementById("productForm").reset();
+        document.getElementById("imagePreview").innerHTML = "";
+        document.getElementById("imagePreview").style.display = "none";
+    }
+</script>

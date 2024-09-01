@@ -1,0 +1,50 @@
+﻿@model Foodie.Models.User
+
+@{
+    ViewData["Title"] = "Delete User";
+    Layout = "~/Views/Shared/_adminlayout.cshtml";
+    
+}
+<br />
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-danger text-white">Delete User Confirmation</div>
+                <div class="card-body">
+<div class="alert alert-warning" role="alert">
+                        <strong>Warning:</strong> Are you sure you want to delete this User?
+                    </div>                    <dl class="row">
+                        <dt class="col-sm-4">First Name:</dt>
+                        <dd class="col-sm-8">@Model.FName</dd>
+                        <dt class="col-sm-4">Last Name:</dt>
+                        <dd class="col-sm-8">@Model.LName</dd>
+                        <dt class="col-sm-4">Username:</dt>
+                        <dd class="col-sm-8">@Model.UserName</dd>
+                        <dt class="col-sm-4">Email:</dt>
+                        <dd class="col-sm-8">@Model.Email</dd>
+                        <dt class="col-sm-4">Contact:</dt>
+                        <dd class="col-sm-8">@Model.Contact</dd>
+                    </dl>
+                    <form id="deleteUserForm" method="post" action="@Url.Action("DeleteUser", "Admin", new { id = Model.Id })">
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                            <a href="@Url.Action("ViewUser", "Admin")" class="btn btn-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById("deleteUserForm").addEventListener("submit", function(event) {
+            var confirmDelete = confirm("Are you sure you want to delete this user?");
+            if (!confirmDelete) {
+                event.preventDefault();
+            }
+        });
+    </script>
+}

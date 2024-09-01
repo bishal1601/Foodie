@@ -1,0 +1,84 @@
+﻿
+@{
+    ViewData["Title"] = "AdminLogIn";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Foodie</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #f6d365 0%, #fda085 50%, #fbc7d4 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .login-container {
+            width: 100%;
+            max-width: 400px;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        .login-container .btn {
+            width: 100%;
+            background-color: #fda085;
+            border: none;
+        }
+        .login-container .btn:hover {
+            background-color: #f6d365;
+        }
+        .login-container h2,h6 {
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: #333;
+        }
+        .login-container .form-group {
+            margin-bottom: 1.25rem;
+        }
+        .login-container .text-center a {
+            display: block;
+            margin-top: 1rem;
+            color: #fda085;
+            text-decoration: none;
+        }
+        .login-container .text-center a:hover {
+            color: #f6d365;
+        }
+         .errormessage{
+        color:red;
+        font-size:15px;
+    }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Admin Login</h2>
+        <h6 class="errormessage">@ViewBag.loginError</h6>
+        <form asp-area=""  method="post">
+            <div class="form-group">
+                <label for="UserName">Username</label>
+                <input type="Username" class="form-control" id="UserName" name="UserName" placeholder="Enter Username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="Password" placeholder="Password" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+            
+        </form>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

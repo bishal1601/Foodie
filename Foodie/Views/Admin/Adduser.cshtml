@@ -1,0 +1,182 @@
+﻿@model Foodie.Models.User
+
+@{
+    ViewData["Title"] = "Add User";
+}
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+    body {
+        overflow: hidden;
+        background-color: #f7f8fa;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .card {
+        border-radius: 15px;
+        margin-top: 50px;
+        padding: 20px;
+        background: white;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+    .input-group-text {
+        background-color: #e9ecef;
+        border: 1px solid #ced4da;
+        border-right: 0;
+    }
+    .form-control {
+        border-left: 0;
+    }
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        border-radius: 25px;
+        padding: 10px 20px;
+    }
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #004085;
+    }
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+        border-radius: 25px;
+        padding: 10px 20px;
+    }
+    .btn-secondary:hover {
+        background-color: #5a6268;
+        border-color: #545b62;
+    }
+    #success_message {
+        display: none;
+        margin-top: 20px;
+    }
+</style>
+<br />
+<div class="container">
+    <div class="card shadow-sm" style="max-width: 500px; margin: auto;">
+        <div class="card-body">
+            <legend class="text-center"><h2><b>Add User</b></h2></legend><br>
+            <form id="contact_form" asp-action="AddUser" asp-controller="Admin" method="post">
+                <fieldset>
+                    <!-- First Name -->
+                    <div class="form-group row">
+                        <label class="col-md-4 col-form-label">First Name</label>
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                </div>
+                                <input asp-for="FName" class="form-control" required>
+                            </div>
+                            <span asp-validation-for="FName" class="text-danger"></span> <!-- Error message -->
+                        </div>
+                    </div>
+
+                    <!-- Last Name -->
+                    <div class="form-group row">
+                        <label class="col-md-4 col-form-label">Last Name</label>
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                </div>
+                                <input asp-for="LName" class="form-control" required>
+                            </div>
+                            <span asp-validation-for="LName" class="text-danger"></span> <!-- Error message -->
+                        </div>
+                    </div>
+
+                    <!-- Username -->
+                    <div class="form-group row">
+                        <label class="col-md-4 col-form-label">Username</label>
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                </div>
+                                <input asp-for="UserName" class="form-control" required>
+                            </div>
+                            <span asp-validation-for="UserName" class="text-danger"></span> <!-- Error message -->
+                        </div>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="form-group row">
+                        <label class="col-md-4 col-form-label">Password</label>
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                </div>
+                                <input asp-for="Password" class="form-control" type="password" required>
+                            </div>
+                            <span asp-validation-for="Password" class="text-danger"></span> <!-- Error message -->
+                        </div>
+                    </div>
+
+                    <!-- Confirm Password -->
+                    <div class="form-group row">
+                        <label class="col-md-4 col-form-label">Confirm Password</label>
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                </div>
+                                <input asp-for="ConfirmPassword" class="form-control" type="password" required>
+                            </div>
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span> <!-- Error message -->
+                        </div>
+                    </div>
+
+                    <!-- E-Mail -->
+                    <div class="form-group row">
+                        <label class="col-md-4 col-form-label">E-Mail</label>
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                </div>
+                                <input asp-for="Email" class="form-control" type="email" required>
+                            </div>
+                            <span asp-validation-for="Email" class="text-danger"></span> <!-- Error message -->
+                        </div>
+                    </div>
+
+                    <!-- Contact No. -->
+                    <div class="form-group row">
+                        <label class="col-md-4 col-form-label">Contact No.</label>
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                </div>
+                                <input asp-for="Contact" class="form-control" type="number" required maxlength="10" minlength="10">
+                            </div>
+                            <span asp-validation-for="Contact" class="text-danger"></span> <!-- Error message -->
+                        </div>
+                    </div>
+
+                    <!-- Success message -->
+                    <div class="alert alert-success text-center" role="alert" id="success_message">
+                        <i class="fas fa-thumbs-up"></i> Success!
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="form-group row">
+                        <div class="col-md-12 text-center">
+                            <button type="submit" class="btn btn-primary mr-2">Save
+</button>
+                            <button type="reset" class="btn btn-secondary" onclick="resetForm()">Reset</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+}

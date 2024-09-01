@@ -1,0 +1,119 @@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@model IEnumerable<Foodie.Models.Cart>
+
+@{
+    ViewData["Title"] = "View Carts";
+
+}
+<style>
+    body {
+            display: flex;
+            
+            justify-content: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #f6d365 0%, #fda085 50%, #fbc7d4 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+</style>
+
+<h1 class="display-4 mt-4 mb-4 text-center">Your Shopping Cart</h1>
+
+<table class="table table-hover table-bordered table-responsive">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">@Html.DisplayNameFor(model => model.ProductName)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.Qty)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.Price)</th>
+            <th scope="col">Amount</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            float total = 0;
+        }
+        @foreach (var item in Model)
+        {
+            var temp = item.Qty * item.Price;
+            var loggedInUserId = Convert.ToInt32(HttpContextAccessor.HttpContext.Session.GetString("CustomerId"));
+            if (loggedInUserId == item.CustomerId)
+            {
+                total += temp;
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.ProductName)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Qty)</td>
+                            <td>Rs. @Html.DisplayFor(modelItem => item.Price)</td>
+                            <td>Rs. @temp.ToString()</td>
+                            <td>
+                                <form asp-action="RemoveCart" method="post">
+                                    <input type="hidden" name="cartId" value="@item.Id" />
+                                    <button type="submit" class="btn btn-sm btn-danger">Remove</button>
+                                </form>
+                            </td>
+                        </tr>
+            }
+        }
+        <tr>
+            <td colspan="3" class="text-right font-weight-bold">Total Amount</td>
+            <td class="font-weight-bold">Rs. @total.ToString()</td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+<form asp-action="Checkout" method="post" id="checkoutForm">
+    <input type="hidden" id="totalAmount" value="@total" />
+    @{
+        if (total == 0)
+        {
+        }
+        else
+        {
+                                         <button type="button" class="btn btn-primary" onclick="showCheckoutModal()">Check Out</button>
+
+        }
+
+    }
+   
+</form>
+
+<!-- Bootstrap Modal -->
+<div class="modal fade" id="checkoutModal" tabindex="-1" role="dialog" aria-labelledby="checkoutModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="checkoutModalLabel">Confirm Checkout</h5>
+                
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="checkoutMessage"></p>
+                <p>Delivery time : 30 minutes.</p>
+                <p>Mode of payment : COD.</p>
+                <p>Are you sure you want to check out?</p>
+            </div>
+            <div class="modal-footer">
+                
+                <button type="button" class="btn btn-primary" onclick="confirmCheckout()">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+        <script>
+            function showCheckoutModal() {
+                var totalAmount = document.getElementById('totalAmount').value;
+                var message = "Total amount : Rs. " + totalAmount + ".";
+                document.getElementById('checkoutMessage').innerText = message;
+                $('#checkoutModal').modal('show');
+            }
+
+            function confirmCheckout() {
+                document.getElementById('checkoutForm').submit();
+            }
+        </script>
+        <!-- Include Bootstrap JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+}

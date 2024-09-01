@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Foodie</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+eQj2F5GdEyFjmncoCwZEr3sK4jDmxZswhWvsja" crossorigin="anonymous" />
+</head>
+<body>
+    @{
+
+    }
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Foodie</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        @{
+                            var loggedInUserName = HttpContextAccessor.HttpContext.Session.GetString("CustomerFname");
+                            var loggedInUserId = HttpContextAccessor.HttpContext.Session.GetString("CustomerId");
+                            var cartCount = HttpContextAccessor.HttpContext.Session.GetString("CartCount");
+
+                            if (!string.IsNullOrEmpty(loggedInUserName))
+                            {
+                                        <li class="nav-item">
+                                            <div class="navbar-text text-white me-2">
+                                                Welcome, @loggedInUserName
+                                            </div>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link position-relative" asp-area="" asp-controller="Home" asp-action="ViewCarts">
+                                                <img src="~/asset/Icon/cart.png" alt="Cart" width="20px" height="20px" />
+                                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                                    <span id="cart-count">@cartCount</span>
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" asp-area="" asp-controller="Auth" asp-action="Logout">
+                                                <i class="fas fa-sign-out-alt"></i> Logout
+                                            </a>
+                                        </li>
+                            }
+                            else
+                            {
+                                        <li class="nav-item">
+                                            <a class="nav-link" asp-area="" asp-controller="Auth" asp-action="Login">
+                                                <i class="fas fa-sign-in-alt"></i> Login
+                                            </a>
+                                        </li>
+                            }
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container" style="padding-top: 70px;">
+        <main role="main" class="pb-1">
+            @RenderBody()
+        </main>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @RenderSection("Scripts", required: false)
+
+    <script>
+        $(document).ready(function () {
+            $(".add-to-cart-button").click(function (e) {
+                e.preventDefault();
+
+                var productId = $(this).data("product-id");
+
+                $.ajax({
+                    url: '@Url.Action("AddToCart", "Home")',
+                    type: 'POST',
+                    data: { productId: productId },
+                    success: function (response) {
+                        if (response.success) {
+                            $("#cart-count").text(response.cartItemCount);
+                        } else if (response.redirectUrl) {
+                            window.location.href = response.redirectUrl;
+                        } else {
+                            alert(response.message);
+                        }
+                    },
+                    error: function () {
+                        alert("An error occurred while adding the product to the cart.");
+                    }
+                });
+            });
+        });
+    </script>
+
+    <link rel="stylesheet" href="~/css/site.css">
+</body>
+</html>
